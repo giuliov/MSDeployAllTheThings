@@ -46,6 +46,7 @@ function Get-SingleFile($files, $pattern)
         return $files
     }
 }
+
 Write-Host "packageFile= Find-Files -SearchPattern $Package"
 $packageFile = Find-Files -SearchPattern $Package
 Write-Host "packageFile= $packageFile"
@@ -88,7 +89,7 @@ Write-Host "Deploying $($packageFile.FileName) package to $DestinationComputer"
 
 $remoteArguments = "computerName='$DestinationComputer',userName='$UserName',password='$Password',authType='$AuthType',"
 
-if (-not $DestinationComputer -or -not $AuthType) {
+if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     Write-Host "No destination or authType defined, performing local operation"
     $remoteArguments = ""
 }

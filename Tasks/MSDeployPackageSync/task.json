@@ -52,11 +52,16 @@
     },
     {
       "name": "AuthType",
-      "type": "string",
+      "type": "pickList",
       "label": "AuthType",
       "defaultValue": "ntlm",
       "required": false,
-	  "properties": {
+      "options": {
+        "none": "(no authentication)",
+        "ntlm": "NTLM",
+        "basic": "Basic"
+        },
+      "properties": {
         "EditableOptions": "True"
       }
     },

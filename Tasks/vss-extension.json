@@ -2,8 +2,8 @@
     "manifestVersion": 1,
     "id": "MSDeployAllTheThings",
     "name": "MSDeployAllTheThings",
-    "version": "0.0.6",
-    "publisher": "rschiefer",
+    "version": "0.0.7",
+    "publisher": "giuliovdev",
     "public": true,
     "targets": [
         {         
@@ -38,7 +38,7 @@
     },
     "links": {
         "learn": {
-            "uri": "https://github.com/rschiefer/MSDeployAllTheThings/tree/master/Tasks/MSDeployPackageSync"
+            "uri": "https://github.com/giuliov/MSDeployAllTheThings/tree/master/Tasks/MSDeployPackageSync"
         }
     },
     "branding": {

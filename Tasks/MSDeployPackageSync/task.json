@@ -1,7 +1,7 @@
 {
-  "id": "BFB8E654-51D4-4ED0-8E04-2B3F0F4FCB6D",
+  "id": "2D3E3826-0849-480A-B6C6-E511AA3A0F81",
   "name": "MSDeployPackageSync",
-  "friendlyName": "MSDeploy Package Sync",
+  "friendlyName": "MSDeploy Sync (fork)",
   "description": "Publish a MSDeploy package.",
   "helpMarkDown": "",
   "category": "Deploy",
@@ -9,16 +9,16 @@
     "Build",
     "Release"
   ],
-  "author": "Robb Schiefer Jr. (@chief7)",
+  "author": "Robb Schiefer Jr. (@chief7), fork by Giulio Vian (@giulio_vian)",
   "version": {
     "Major": 0,
-    "Minor": 6,
+    "Minor": 7,
     "Patch": 0
   },
   "demands": [
     
   ],
-  "minimumAgentVersion": "1.90.0",
+  "minimumAgentVersion": "1.95.0",
   "inputs": [
     {
       "name": "Package",
@@ -99,7 +99,7 @@
       "required": false
     }
   ],
-  "instanceNameFormat": "MSDeploy Package Sync: $(WebSiteName)",
+  "instanceNameFormat": "MSDeploy Sync: $(WebSiteName)",
   "execution": {
     "PowerShell": {
       "target": "$(currentDirectory)\\MSDeployPackageSync.ps1",

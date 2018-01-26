@@ -19,16 +19,39 @@
     
   ],
   "minimumAgentVersion": "1.95.0",
+	"groups": [
+    {
+      "name": "Source",
+      "displayName": "Source",
+      "isExpanded": true
+    },
+    {
+      "name": "Destination",
+      "displayName": "Destination",
+      "isExpanded": true
+    },
+    {
+      "name": "Authentication",
+      "displayName": "Authentication",
+      "isExpanded": false
+    },
+    {
+      "name": "AdditionalOptions",
+      "displayName": "Additional Options",
+      "isExpanded": false
+    }],
   "inputs": [
     {
+      "groupName": "Source",
       "name": "Package",
       "type": "filePath",
       "label": "Web Deploy Package",
       "defaultValue": "",
-      "helpMarkDown": "Path to the MSDeploy package under the default artifact directory.",
+      "helpMarkDown": "Path to sources, typically the MSDeploy package under the default artifact directory.",
       "required": true
     },
     {
+      "groupName": "Destination",
       "name": "DestinationProvider",
       "type": "pickList",
       "label": "Destination Provider",
@@ -80,6 +103,7 @@
       }
     },
     {
+      "groupName": "Destination",
       "name": "DestinationComputer",
       "type": "string",
       "label": "Destination Computer",
@@ -91,6 +115,7 @@
       }
     },
     {
+      "groupName": "Authentication",
       "name": "AuthType",
       "type": "pickList",
       "label": "AuthType",
@@ -106,6 +131,7 @@
       }
     },
     {
+      "groupName": "Authentication",
       "name": "Username",
       "type": "string",
       "label": "Username",
@@ -116,6 +142,7 @@
       }
     },
     {
+      "groupName": "Authentication",
       "name": "Password",
       "type": "string",
       "label": "Password",
@@ -126,6 +153,7 @@
       }
     },
     {
+      "groupName": "Source",
       "name": "SourceProvider",
       "type": "pickList",
       "label": "SourceProvider",
@@ -177,6 +205,7 @@
       }
     },
     {
+      "groupName": "AdditionalOptions",
       "name": "AdditionalArguments",
       "type": "multiLine",
       "label": "Additional Arguments",

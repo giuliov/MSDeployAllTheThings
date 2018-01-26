@@ -3,7 +3,7 @@ param
 (
 
     [String] [Parameter(Mandatory = $true)]
-    $Package,
+    $SourcePath,
     
     [String] [Parameter(Mandatory = $true)]
     $DestinationProvider,
@@ -24,12 +24,18 @@ param
     $SourceProvider,
 
     [String] [Parameter(Mandatory = $false)]
-    $AdditionalArguments
+    $AdditionalArguments,
+
+    [String] [Parameter(Mandatory = $false)]
+    $DestinationPath,
+
+    [bool] [Parameter(Mandatory = $false)]
+    $IncludeACLs,
+
+    [bool]$AllowUntrusted
 )
 
-import-module "Microsoft.TeamFoundation.DistributedTask.Task.Internal"
-import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
-
+Import-Module $PSScriptRoot\ps_modules\VstsTaskSdk\VstsTaskSdk.psd1 -ArgumentList @{ NonInteractive = $true } -Verbose:$false
 
 function Get-SingleFile($files, $pattern)
 {
@@ -47,23 +53,15 @@ function Get-SingleFile($files, $pattern)
     }
 }
 
-Write-Host "packageFile= Find-Files -SearchPattern $Package"
-$packageFile = Find-Files -SearchPattern $Package
-Write-Host "packageFile= $packageFile"
-
-#Ensure that at most a single package (.zip) file is found
-$packageFile = Get-SingleFile $packageFile $Package
-
-# adding System.Web explicitly, since we use http utility
-Add-Type -AssemblyName System.Web
-
 Write-Verbose "Entering script MSDeployPackageSync.ps1"
 
-Write-Host "Package= $Package"
+# logging
+Write-Host "SourceProvider= $SourceProvider"
+Write-Host "SourcePath= $SourcePath"
 Write-Host "DestinationProvider= $DestinationProvider"
+Write-Host "DestinationPath= $DestinationPath"
 Write-Host "DestinationComputer= $DestinationComputer"
 Write-Host "Username= $Username"
-Write-Host "SourceProvider= $SourceProvider"
 Write-Host "AdditionalArguments= $AdditionalArguments"
 
 
@@ -85,8 +83,6 @@ $msdeploy = Join-Path $InstallPath "msdeploy.exe"
 # $publishUrl ="https://$Name.scm.azurewebsites.net:443/msdeploy.axd?site-name=$Name"
 # $webApp ="$Name\$App"
 
-Write-Host "Deploying $($packageFile.FileName) package to $DestinationComputer"
-
 $remoteArguments = "computerName='$DestinationComputer',userName='$UserName',password='$Password',authType='$AuthType',"
 
 if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
@@ -94,17 +90,35 @@ if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     $remoteArguments = ""
 }
 
-if (-not $SourceProvider) {
-    Write-Host "No source provider specified, using package provider for '$packageFile'"
-    $SourceProvider = "package='$packageFile'"
+if (-not $SourceProvider -or $SourceProvider -eq "package") {
+    Write-Host "packageFile= Find-VstsFiles -Pattern ${SourcePath}"
+    $packageFile = Find-VstsFiles -LegacyPattern $SourcePath
+    Write-Host "packageFile= ${packageFile}"
+    
+    #Ensure that at most a single package (.zip) file is found
+    $packageFile = Get-SingleFile $packageFile $SourcePath
+    
+    Write-Host "No source provider specified, using package provider for '${packageFile}'"
+    $SourceProvider = "package='${packageFile}'"
+} else {
+    $SourceProvider = "${SourceProvider}='${SourcePath}'"
 }
+
+if ($DestinationPath) {
+    $DestinationProvider = "${DestinationProvider}='${DestinationPath}'"
+}
+
+Write-Host "Deploying $SourceProvider to $DestinationComputer"
 
 [string[]] $arguments = 
  "-verb:sync",
- "-source:$SourceProvider",
- "-dest:$DestinationProvider,$($remoteArguments)includeAcls='False'",
-#"-setParam:name='IIS", "Web", "Application", ("Name',value='" + $webApp + "'"),
- "-allowUntrusted"
+ "-source:${SourceProvider}",
+ "-dest:${DestinationProvider},${remoteArguments}includeAcls='${IncludeACLs}'"
+#,"-setParam:name='IIS", "Web", "Application", ("Name',value='" + $webApp + "'")
+
+if ($AllowUntrusted) {
+    $arguments += "-allowUntrusted"
+}
 
 $fullCommand = """$msdeploy"" $arguments $AdditionalArguments"
 Write-Host $fullCommand

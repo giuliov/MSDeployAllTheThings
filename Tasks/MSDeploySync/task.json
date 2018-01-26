@@ -1,0 +1,248 @@
+{
+  "id": "2D3E3826-0849-480A-B6C6-E511AA3A0F81",
+  "name": "MSDeploySync",
+  "friendlyName": "MSDeploy Sync (fork)",
+  "description": "Publish a MSDeploy package.",
+  "helpMarkDown": "",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "author": "Robb Schiefer Jr. (@chief7), fork by Giulio Vian (@giulio_vian)",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 15
+  },
+  "preview": true,
+  "demands": [],
+  "minimumAgentVersion": "1.95.0",
+  "groups": [
+    {
+      "name": "Source",
+      "displayName": "Source",
+      "isExpanded": true
+    },
+    {
+      "name": "Destination",
+      "displayName": "Destination",
+      "isExpanded": true
+    },
+    {
+      "name": "Authentication",
+      "displayName": "Authentication",
+      "isExpanded": false
+    },
+    {
+      "name": "AdditionalOptions",
+      "displayName": "Additional Options",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "groupName": "Source",
+      "name": "SourcePath",
+      "type": "filePath",
+      "label": "Web Deploy Package / Source Path",
+      "defaultValue": "",
+      "helpMarkDown": "Path to sources, typically the MSDeploy package under the default artifact directory.",
+      "required": true
+    },
+    {
+      "groupName": "Destination",
+      "name": "DestinationProvider",
+      "type": "pickList",
+      "label": "Destination Provider",
+      "defaultValue": "auto",
+      "required": true,
+      "helpMarkDown": "The destination MSDeploy provider.",
+      "options": {
+        "auto": "auto",
+        "appHostConfig": "appHostConfig",
+        "appHostSchema": "appHostSchema",
+        "appPoolConfig": "appPoolConfig",
+        "appPoolEnable32Bit": "appPoolEnable32Bit",
+        "appPoolNetFx": "appPoolNetFx",
+        "appPoolPipeline": "appPoolPipeline",
+        "archiveDir": "archiveDir",
+        "cert": "cert",
+        "comObject32": "comObject32",
+        "comObject64": "comObject64",
+        "contentPath": "contentPath",
+        "createApp": "createApp",
+        "dbFullSql": "dbFullSql",
+        "dbMySql": "dbMySql",
+        "dbSqlite": "dbSqlite",
+        "dirPath": "dirPath",
+        "fcgiExtConfig": "fcgiExtConfig",
+        "filePath": "filePath",
+        "gacAssembly": "gacAssembly",
+        "gacInstall": "gacInstall",
+        "iisApp": "iisApp",
+        "machineConfig32": "machineConfig32",
+        "machineConfig64": "machineConfig64",
+        "metaKey": "metaKey",
+        "package": "package",
+        "recycleApp": "recycleApp",
+        "regKey": "regKey",
+        "regValue": "regValue",
+        "rootWebConfig32": "rootWebConfig32",
+        "rootWebConfig64": "rootWebConfig64",
+        "runCommand": "runCommand",
+        "setAcl": "setAcl",
+        "urlScanConfig": "urlScanConfig",
+        "webApp": "webApp",
+        "webServer": "webServer",
+        "webServer60": "webServer60",
+        "manifest": "manifest"
+      },
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Destination",
+      "name": "DestinationPath",
+      "type": "string",
+      "label": "Destination Path",
+      "defaultValue": "",
+      "helpMarkDown": "Path to destination.",
+      "required": false
+    },
+    {
+      "groupName": "Destination",
+      "name": "IncludeACLs",
+      "type": "boolean",
+      "label": "Include ACLs",
+      "defaultValue": false,
+      "helpMarkDown": "Include ACLs.",
+      "required": false
+    },
+    {
+      "groupName": "Destination",
+      "name": "DestinationComputer",
+      "type": "string",
+      "label": "Destination Computer",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The destination computer to deploy the MSDeploy package to. If blank, will perform operations on agent machine. For an Azure website the format should be https://[SiteName].scm.azurewebsites.net:443/msdeploy.axd?site=[SiteName].",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Authentication",
+      "name": "AuthType",
+      "type": "pickList",
+      "label": "AuthType",
+      "defaultValue": "ntlm",
+      "required": false,
+      "options": {
+        "none": "(no authentication)",
+        "ntlm": "NTLM",
+        "basic": "Basic"
+      },
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Authentication",
+      "name": "Username",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": false,
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Authentication",
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": false,
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Source",
+      "name": "SourceProvider",
+      "type": "pickList",
+      "label": "Source Provider",
+      "defaultValue": "package",
+      "helpMarkDown": "The source MSDeploy provider. If blank, the package provider (package='$packageFile') will be used.",
+      "required": false,
+      "options": {
+        "package": "package",
+        "appHostConfig": "appHostConfig",
+        "appHostSchema": "appHostSchema",
+        "appPoolConfig": "appPoolConfig",
+        "appPoolEnable32Bit": "appPoolEnable32Bit",
+        "appPoolNetFx": "appPoolNetFx",
+        "appPoolPipeline": "appPoolPipeline",
+        "archiveDir": "archiveDir",
+        "auto": "auto",
+        "cert": "cert",
+        "comObject32": "comObject32",
+        "comObject64": "comObject64",
+        "contentPath": "contentPath",
+        "createApp": "createApp",
+        "dbFullSql": "dbFullSql",
+        "dbMySql": "dbMySql",
+        "dbSqlite": "dbSqlite",
+        "dirPath": "dirPath",
+        "fcgiExtConfig": "fcgiExtConfig",
+        "filePath": "filePath",
+        "gacAssembly": "gacAssembly",
+        "gacInstall": "gacInstall",
+        "iisApp": "iisApp",
+        "machineConfig32": "machineConfig32",
+        "machineConfig64": "machineConfig64",
+        "metaKey": "metaKey",
+        "recycleApp": "recycleApp",
+        "regKey": "regKey",
+        "regValue": "regValue",
+        "rootWebConfig32": "rootWebConfig32",
+        "rootWebConfig64": "rootWebConfig64",
+        "runCommand": "runCommand",
+        "setAcl": "setAcl",
+        "urlScanConfig": "urlScanConfig",
+        "webApp": "webApp",
+        "webServer": "webServer",
+        "webServer60": "webServer60",
+        "manifest": "manifest"
+      },
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "AdditionalOptions",
+      "name": "AllowUntrusted",
+      "type": "boolean",
+      "label": "Allow Untrusted",
+      "defaultValue": true,
+      "required": false
+    },
+    {
+      "groupName": "AdditionalOptions",
+      "name": "AdditionalArguments",
+      "type": "multiLine",
+      "label": "Additional Arguments",
+      "defaultValue": "",
+      "required": false
+    }
+  ],
+  "instanceNameFormat": "MSDeploy Sync: $(DestinationComputer) $(DestinationPath)",
+  "execution": {
+    "PowerShell3": {
+      "target": "MSDeploySyncTask.ps1"
+    }
+  }
+}

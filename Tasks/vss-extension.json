@@ -11,6 +11,10 @@
         }
     ],    
     "description": "Build/deployment tasks for MSDeploy.",
+    "scopes": [
+        "vso.build_execute",
+        "vso.release_execute"
+    ],
     "categories": [
         "Build and release"
     ],
@@ -19,7 +23,8 @@
     },
     "files": [
         {
-            "path": "MSDeployPackageSync"
+            "path": "MSDeploySync",
+            "addressable": false
         }
     ],
     "screenshots": [

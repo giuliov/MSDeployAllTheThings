@@ -1,0 +1,143 @@
+{
+  "id": "F5925FF9-AD26-4C7C-888F-A22B83D9EB5A",
+  "name": "MSDeployDelete",
+  "friendlyName": "MSDeploy Delte",
+  "description": "MSDeploy deletes the objects specified by the destination argument.",
+  "helpMarkDown": "",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "author": "Giulio Vian (@giulio_vian) derived from Robb Schiefer Jr. (@chief7) work",
+  "version": {
+    "Major": 0,
+    "Minor": 0,
+    "Patch": 4
+  },
+  "preview": true,
+  "demands": [],
+  "minimumAgentVersion": "1.95.0",
+  "groups": [
+    {
+      "name": "Destination",
+      "displayName": "Destination",
+      "isExpanded": true
+    },
+    {
+      "name": "Authentication",
+      "displayName": "Authentication",
+      "isExpanded": false
+    },
+    {
+      "name": "AdditionalOptions",
+      "displayName": "Additional Options",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "groupName": "Destination",
+      "name": "DestinationProvider",
+      "type": "pickList",
+      "label": "Destination Provider",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The destination MSDeploy provider.",
+      "options": {
+        "appHostConfig": "appHostConfig",
+        "appPoolConfig": "appPoolConfig",
+        "cert": "cert",
+        "contentPath": "contentPath",
+        "createApp": "createApp",
+        "dirPath": "dirPath",
+        "filePath": "filePath",
+        "iisApp": "iisApp"
+      },
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Destination",
+      "name": "DestinationPath",
+      "type": "string",
+      "label": "Destination Path",
+      "defaultValue": "",
+      "helpMarkDown": "Path to destination.",
+      "required": true
+    },
+    {
+      "groupName": "Destination",
+      "name": "DestinationComputer",
+      "type": "string",
+      "label": "Destination Computer",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "The destination computer to deploy the MSDeploy package to. If blank, will perform operations on agent machine. For an Azure website the format should be https://[SiteName].scm.azurewebsites.net:443/msdeploy.axd?site=[SiteName].",
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Authentication",
+      "name": "AuthType",
+      "type": "pickList",
+      "label": "AuthType",
+      "defaultValue": "ntlm",
+      "required": false,
+      "options": {
+        "none": "(no authentication)",
+        "ntlm": "NTLM",
+        "basic": "Basic"
+      },
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Authentication",
+      "name": "Username",
+      "type": "string",
+      "label": "Username",
+      "defaultValue": "",
+      "required": false,
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "Authentication",
+      "name": "Password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": false,
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "groupName": "AdditionalOptions",
+      "name": "AllowUntrusted",
+      "type": "boolean",
+      "label": "Allow Untrusted",
+      "defaultValue": true,
+      "required": false
+    },
+    {
+      "groupName": "AdditionalOptions",
+      "name": "AdditionalArguments",
+      "type": "multiLine",
+      "label": "Additional Arguments",
+      "defaultValue": "",
+      "required": false
+    }
+  ],
+  "instanceNameFormat": "MSDeploy Delete: $(DestinationComputer) $(DestinationPath)",
+  "execution": {
+    "PowerShell3": {
+      "target": "MSDeployDeleteTask.ps1"
+    }
+  }
+}

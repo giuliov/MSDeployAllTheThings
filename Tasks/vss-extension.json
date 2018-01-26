@@ -25,6 +25,10 @@
         {
             "path": "MSDeploySync",
             "addressable": false
+        },
+        {
+            "path": "MSDeployDelete",
+            "addressable": false
         }
     ],
     "screenshots": [

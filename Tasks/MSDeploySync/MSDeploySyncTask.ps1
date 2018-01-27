@@ -13,6 +13,7 @@ try {
     [string]$DestinationPath = Get-VstsInput -Name DestinationPath
     [bool]$IncludeACLs = Get-VstsInput -Name IncludeACLs -AsBool
     [string]$DestinationComputer = Get-VstsInput -Name DestinationComputer
+    [string]$Protocol = Get-VstsInput -Name Protocol
     [string]$AuthType = Get-VstsInput -Name AuthType
     [string]$Username = Get-VstsInput -Name Username
     [string]$Password = Get-VstsInput -Name Password
@@ -21,7 +22,12 @@ try {
  
     #Assert-VstsPath -LiteralPath $source -PathType Container
 
-    .\MSDeploySync.ps1 -SourceProvider $SourceProvider -SourcePath $SourcePath -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath -IncludeACLs $IncludeACLs -DestinationComputer $DestinationComputer -AuthType $AuthType -Username $Username -Password $Password -AdditionalArguments $AdditionalArguments
+    .\MSDeploySync.ps1 -SourceProvider $SourceProvider -SourcePath $SourcePath `
+        -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath `
+        -IncludeACLs $IncludeACLs -DestinationComputer $DestinationComputer `
+        -Protocol $Protocol `
+        -AuthType $AuthType -Username $Username -Password $Password `
+        -AdditionalArguments $AdditionalArguments
 
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

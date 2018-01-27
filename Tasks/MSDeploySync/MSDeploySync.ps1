@@ -10,6 +10,8 @@ param
     
     [String] [Parameter(Mandatory = $false)]
     $DestinationComputer,
+    [String] [Parameter(Mandatory = $false)]
+    $Protocol,
     
     [String] [Parameter(Mandatory = $false)]
     $AuthType,
@@ -83,11 +85,19 @@ $msdeploy = Join-Path $InstallPath "msdeploy.exe"
 # $publishUrl ="https://$Name.scm.azurewebsites.net:443/msdeploy.axd?site-name=$Name"
 # $webApp ="$Name\$App"
 
-$remoteArguments = "computerName='$DestinationComputer',userName='$UserName',password='$Password',authType='$AuthType',"
-
 if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     Write-Host "No destination or authType defined, performing local operation"
     $remoteArguments = ""
+} else {
+
+    $URL = switch ($Protocol) {
+        "MsDepSvc" { "https://${DestinationComputer}/MSDeployAgentService" }
+        "WMSvc" { "https://${DestinationComputer}:8172/MSDeploy.axd" }
+        "custom" { $DestinationComputer }
+        Default {  $DestinationComputer }
+    }
+    
+    $remoteArguments = "computerName='${URL}',userName='${UserName}',password='${Password}',authType='${AuthType}',"
 }
 
 if (-not $SourceProvider -or $SourceProvider -eq "package") {

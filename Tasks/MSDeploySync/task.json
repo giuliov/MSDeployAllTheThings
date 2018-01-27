@@ -133,6 +133,20 @@
       }
     },
     {
+      "groupName": "Destination",
+      "name": "Protocol",
+      "type": "radio",
+      "label": "Protocol",
+      "defaultValue": "WMSvc",
+      "helpMarkDown": "Protocol / server application.",
+      "required": false,
+      "options": {
+        "custom": "Custom URL",
+        "WMSvc": "Web Deploy Handler on standard port",
+        "MsDepSvc": "Web Deploy Remote Agent"
+      }
+    },
+    {
       "groupName": "Authentication",
       "name": "AuthType",
       "type": "pickList",

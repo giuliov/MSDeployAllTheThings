@@ -1,40 +1,32 @@
 [CmdletBinding(DefaultParameterSetName = 'None')]
 param
 (
-
+    [String] [Parameter(Mandatory = $false)]
+    $SourceProvider,
     [String] [Parameter(Mandatory = $true)]
     $SourcePath,
-    
     [String] [Parameter(Mandatory = $true)]
     $DestinationProvider,
-    
+    [String] [Parameter(Mandatory = $false)]
+    $DestinationPath,
     [String] [Parameter(Mandatory = $false)]
     $DestinationComputer,
     [String] [Parameter(Mandatory = $false)]
     $Protocol,
+    [bool] [Parameter(Mandatory = $false)]
+    $IncludeACLs,    
     
     [String] [Parameter(Mandatory = $false)]
     $AuthType,
-    
     [String] [Parameter(Mandatory = $false)]
     $Username,
-    
     [String] [Parameter(Mandatory = $false)]
     $Password,
+    [bool]$AllowUntrusted,
 
     [String] [Parameter(Mandatory = $false)]
-    $SourceProvider,
+    $AdditionalArguments
 
-    [String] [Parameter(Mandatory = $false)]
-    $AdditionalArguments,
-
-    [String] [Parameter(Mandatory = $false)]
-    $DestinationPath,
-
-    [bool] [Parameter(Mandatory = $false)]
-    $IncludeACLs,
-
-    [bool]$AllowUntrusted
 )
 
 Import-Module $PSScriptRoot\ps_modules\VstsTaskSdk\VstsTaskSdk.psd1 -ArgumentList @{ NonInteractive = $true } -Verbose:$false
@@ -56,16 +48,6 @@ function Get-SingleFile($files, $pattern)
 }
 
 Write-Verbose "Entering script MSDeployPackageSync.ps1"
-
-# logging
-Write-Host "SourceProvider= $SourceProvider"
-Write-Host "SourcePath= $SourcePath"
-Write-Host "DestinationProvider= $DestinationProvider"
-Write-Host "DestinationPath= $DestinationPath"
-Write-Host "DestinationComputer= $DestinationComputer"
-Write-Host "Username= $Username"
-Write-Host "AdditionalArguments= $AdditionalArguments"
-
 
 $MSDeployKey = 'HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy\3' 
  if(!(Test-Path $MSDeployKey)) { 
@@ -130,25 +112,4 @@ if ($AllowUntrusted) {
     $arguments += "-allowUntrusted"
 }
 
-$fullCommand = """$msdeploy"" $arguments $AdditionalArguments"
-Write-Host $fullCommand
-
-# invoke-expression $fullCommand
-
-# $block = $ExecutionContext.InvokeCommand.NewScriptBlock($fullCommand)
-# & $block
-
-$result = cmd.exe /c "$fullCommand"
-
-Write-Host $result
-
-
-Write-Verbose "Leaving script MSDeployPackageSync.ps1"
-
-
-
-# PS D:\Github\vso-agent-tasks\Tasks\MSDeployPackageSync> .\MSDeployPackageSync.ps1 -DestinationProvider 'auto' -Package 'C:\temp\rootSitePackage\rootsite.zip'
-#  -DestinationComputer 'https://testingvirtualapps.scm.azurewebsites.net:443/msdeploy.axd?site=TestingVirtualApps' -AuthType 'basic' -DoNotDelete 'FALSE' -Use
-# rname '$TestingVirtualApps' -Password 'Rvs7kwDcuPxAfq2EKLoqRQgWhxBkcNlGrzLzfomQsvFF74Rdi3tohRMhRPrh' -AdditionalArguments "-setParamFile:C:\temp\rootSitePack
-# age\RootSite.SetParameters.xml"
-# Package= C:\temp\rootSitePackage\rootsite.zip
+Invoke-VstsTool -FileName $msdeploy -Arguments "$arguments $AdditionalArguments" -RequireExitCodeZero

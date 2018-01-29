@@ -13,7 +13,7 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 20
+    "Patch": 29
   },
   "preview": true,
   "demands": [],
@@ -238,7 +238,7 @@
       }
     },
     {
-      "groupName": "AdditionalOptions",
+      "groupName": "Authentication",
       "name": "AllowUntrusted",
       "type": "boolean",
       "label": "Allow Untrusted",

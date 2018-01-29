@@ -64,9 +64,6 @@ $msdeploy = Join-Path $InstallPath "msdeploy.exe"
  throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
  } 
 
-# $publishUrl ="https://$Name.scm.azurewebsites.net:443/msdeploy.axd?site-name=$Name"
-# $webApp ="$Name\$App"
-
 if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     Write-Host "No destination or authType defined, performing local operation"
     $remoteArguments = ""
@@ -75,6 +72,7 @@ if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     $URL = switch ($Protocol) {
         "MsDepSvc" { "https://${DestinationComputer}/MSDeployAgentService" }
         "WMSvc" { "https://${DestinationComputer}:8172/MSDeploy.axd" }
+        "AzureWebSite" { "https://${DestinationComputer}.scm.azurewebsites.net:443/msdeploy.axd?site=${DestinationComputer}" }
         "custom" { $DestinationComputer }
         Default {  $DestinationComputer }
     }

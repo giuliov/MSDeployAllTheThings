@@ -195,7 +195,8 @@
       "options": {
         "custom": "Custom",
         "WMSvc": "Web Deploy Handler on standard port",
-        "MsDepSvc": "Web Deploy Remote Agent"
+        "MsDepSvc": "Web Deploy Remote Agent",
+        "AzureWebSite": "Azure Web App"
       }
     },
     {

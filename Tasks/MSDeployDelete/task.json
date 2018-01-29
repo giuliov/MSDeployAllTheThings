@@ -1,7 +1,7 @@
 {
   "id": "F5925FF9-AD26-4C7C-888F-A22B83D9EB5A",
   "name": "MSDeployDelete",
-  "friendlyName": "MSDeploy Delte",
+  "friendlyName": "MSDeploy Delete",
   "description": "MSDeploy deletes the objects specified by the destination argument.",
   "helpMarkDown": "",
   "category": "Deploy",
@@ -12,8 +12,8 @@
   "author": "Giulio Vian (@giulio_vian) derived from Robb Schiefer Jr. (@chief7) work",
   "version": {
     "Major": 0,
-    "Minor": 0,
-    "Patch": 4
+    "Minor": 7,
+    "Patch": 0
   },
   "preview": true,
   "demands": [],

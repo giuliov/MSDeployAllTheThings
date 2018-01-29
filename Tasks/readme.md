@@ -26,6 +26,10 @@ Fixed bug from last change which caused a unintended breaking change.  Specifica
 
 Update task version too.
 
+### 0.7.0
+
+Fork!
+
 ## Want more?
 
 If you have any suggestions for more tasks please contact me [@chief7](https://twitter.com/chief7) on Twitter or on my blog [dotnetcatch.com](https://dotnetcatch.com).   

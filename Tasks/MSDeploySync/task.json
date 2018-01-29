@@ -1,7 +1,7 @@
 {
-  "id": "2D3E3826-0849-480A-B6C6-E511AA3A0F81",
+  "id": "A7DAFFCF-C793-4955-A0EB-0E393B81C43F",
   "name": "MSDeploySync",
-  "friendlyName": "MSDeploy Sync (fork)",
+  "friendlyName": "MSDeploy Sync",
   "description": "Publish a MSDeploy package.",
   "helpMarkDown": "",
   "category": "Deploy",
@@ -9,11 +9,11 @@
     "Build",
     "Release"
   ],
-  "author": "Robb Schiefer Jr. (@chief7), fork by Giulio Vian (@giulio_vian)",
+  "author": "Giulio Vian (@giulio_vian) derived from Robb Schiefer Jr. (@chief7) work",
   "version": {
-    "Major": 1,
-    "Minor": 0,
-    "Patch": 29
+    "Major": 0,
+    "Minor": 7,
+    "Patch": 2
   },
   "preview": true,
   "demands": [],
@@ -179,10 +179,7 @@
       "label": "Destination Computer",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "The destination computer to deploy the MSDeploy package to. If blank, will perform operations on agent machine. For an Azure website the format should be https://[SiteName].scm.azurewebsites.net:443/msdeploy.axd?site=[SiteName].",
-      "properties": {
-        "EditableOptions": "True"
-      }
+      "helpMarkDown": "The destination computer to deploy the MSDeploy package to. If blank, will perform operations on agent machine. For an Azure website the format should be https://[SiteName].scm.azurewebsites.net:443/msdeploy.axd?site=[SiteName]."
     },
     {
       "groupName": "Destination",
@@ -194,7 +191,7 @@
       "required": false,
       "options": {
         "custom": "Custom",
-        "WMSvc": "Web Deploy Handler on standard port",
+        "WMSvc": "Web Deploy Handler on default port (8172)",
         "MsDepSvc": "Web Deploy Remote Agent",
         "AzureWebSite": "Azure Web App"
       }
@@ -203,7 +200,7 @@
       "groupName": "Authentication",
       "name": "AuthType",
       "type": "pickList",
-      "label": "AuthType",
+      "label": "Authentication Type",
       "defaultValue": "ntlm",
       "required": false,
       "options": {
@@ -211,6 +208,7 @@
         "ntlm": "NTLM",
         "basic": "Basic"
       },
+      "helpMarkDown": "Type of Authentication, prefer **NTLM** for deployment to the Web Deploy Remote Agent service and **Basic** for deployment to the Web Deploy Handler.",
       "properties": {
         "EditableOptions": "True"
       }
@@ -221,10 +219,7 @@
       "type": "string",
       "label": "Username",
       "defaultValue": "",
-      "required": false,
-      "properties": {
-        "EditableOptions": "True"
-      }
+      "required": false
     },
     {
       "groupName": "Authentication",
@@ -232,10 +227,7 @@
       "type": "string",
       "label": "Password",
       "defaultValue": "",
-      "required": false,
-      "properties": {
-        "EditableOptions": "True"
-      }
+      "required": false
     },
     {
       "groupName": "Authentication",
@@ -253,7 +245,7 @@
       "label": "Parameters to set",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "Use a line for each parameter to set e.g. `r`nparam1=value1`r`nparam2=value2."
+      "helpMarkDown": "Use a line for each parameter to set e.g. \r\n`param1=value1`\r\n`param2=value2`."
     },
     {
       "groupName": "AdditionalOptions",

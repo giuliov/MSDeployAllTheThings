@@ -47,4 +47,3 @@ The authentication type can be either "ntlm" or "basic".
 You must use single quotes for arguments, double quotes will cause errors. Common arguments include:
 
  - **-verbose** - Enables verbose logging to aid in troubleshooting a deployment. 
- - **-setParam:'IIS Web Application Name'=[appName]** - Sets a WebDeploy Parameterization parameter.  In this case, it sets the default IIS site name.

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "MSDeployAllTheThings",
     "name": "MSDeployAllTheThings",
-    "version": "0.0.7",
+    "version": "0.7.2",
     "publisher": "giuliovdev",
     "public": true,
     "targets": [
@@ -47,7 +47,7 @@
     },
     "links": {
         "learn": {
-            "uri": "https://github.com/giuliov/MSDeployAllTheThings/tree/master/Tasks/MSDeployPackageSync"
+            "uri": "https://github.com/giuliov/MSDeployAllTheThings/"
         }
     },
     "branding": {
@@ -55,13 +55,23 @@
     },
     "contributions": [
         {
-            "id": "msdeploy-package-sync",
+            "id": "msdeploy-sync",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "MSDeployPackageSync"
+                "name": "MSDeploySync"
+            }
+        },
+        {
+            "id": "msdeploy-delete",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "MSDeployDelete"
             }
         }
     ]

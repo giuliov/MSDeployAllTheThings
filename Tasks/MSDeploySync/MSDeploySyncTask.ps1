@@ -17,6 +17,7 @@ try {
     [string]$AuthType = Get-VstsInput -Name AuthType
     [string]$Username = Get-VstsInput -Name Username
     [string]$Password = Get-VstsInput -Name Password
+    [string]$SetParameters = Get-VstsInput -Name SetParameters
     [bool]$AllowUntrusted = Get-VstsInput -Name AllowUntrusted -AsBool
     [string]$AdditionalArguments = Get-VstsInput -Name AdditionalArguments
  
@@ -27,6 +28,7 @@ try {
         -IncludeACLs $IncludeACLs -DestinationComputer $DestinationComputer `
         -Protocol $Protocol `
         -AuthType $AuthType -Username $Username -Password $Password `
+        -SetParameters $SetParameters `
         -AdditionalArguments $AdditionalArguments
 
 } finally {

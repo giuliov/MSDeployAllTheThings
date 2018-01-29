@@ -248,6 +248,15 @@
     },
     {
       "groupName": "AdditionalOptions",
+      "name": "SetParameters",
+      "type": "multiLine",
+      "label": "Parameters to set",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Use a line for each parameter to set e.g. `r`nparam1=value1`r`nparam2=value2."
+    },
+    {
+      "groupName": "AdditionalOptions",
       "name": "AdditionalArguments",
       "type": "multiLine",
       "label": "Additional Arguments",

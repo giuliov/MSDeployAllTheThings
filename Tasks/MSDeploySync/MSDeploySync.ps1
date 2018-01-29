@@ -25,6 +25,8 @@ param
     [bool]$AllowUntrusted,
 
     [String] [Parameter(Mandatory = $false)]
+    $SetParameters,
+    [String] [Parameter(Mandatory = $false)]
     $AdditionalArguments
 
 )
@@ -104,10 +106,20 @@ Write-Host "Deploying $SourceProvider to $DestinationComputer"
  "-verb:sync",
  "-source:${SourceProvider}",
  "-dest:${DestinationProvider},${remoteArguments}includeAcls='${IncludeACLs}'"
-#,"-setParam:name='IIS", "Web", "Application", ("Name',value='" + $webApp + "'")
 
 if ($AllowUntrusted) {
     $arguments += "-allowUntrusted"
 }
 
-Invoke-VstsTool -FileName $msdeploy -Arguments "$arguments $AdditionalArguments" -RequireExitCodeZero
+$params = @()
+if (![string]::IsNullOrWhiteSpace($SetParameters)) {
+    $SetParameters.Split("`n") | foreach {
+        $parameter = $_
+        $pair = $parameter.Split("=")
+        $pName = $pair[0].Trim()
+        $pVal = $pair[1].TrimEnd("`n","`r")
+        $params += "-setParam:name='${pName}',value='${pVal}'"
+    }
+}
+
+Invoke-VstsTool -FileName $msdeploy -Arguments "${arguments} ${params} ${AdditionalArguments}" -RequireExitCodeZero

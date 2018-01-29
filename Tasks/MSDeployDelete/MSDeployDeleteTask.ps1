@@ -18,7 +18,12 @@ try {
  
     #Assert-VstsPath -LiteralPath $source -PathType Container
 
-    .\MSDeployDelete.ps1 -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath -DestinationComputer $DestinationComputer -AuthType $AuthType -Username $Username -Password $Password -AdditionalArguments $AdditionalArguments
+    .\MSDeployDelete.ps1 `
+        -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath `
+	    -DestinationComputer $DestinationComputer `
+        -Protocol $Protocol `
+        -AuthType $AuthType -Username $Username -Password $Password `
+        -AdditionalArguments $AdditionalArguments
 
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation

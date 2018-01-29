@@ -80,6 +80,21 @@
       }
     },
     {
+      "groupName": "Destination",
+      "name": "Protocol",
+      "type": "radio",
+      "label": "Protocol",
+      "defaultValue": "WMSvc",
+      "helpMarkDown": "Protocol / server application.",
+      "required": false,
+      "options": {
+        "custom": "Custom",
+        "WMSvc": "Web Deploy Handler on standard port",
+        "MsDepSvc": "Web Deploy Remote Agent",
+        "AzureWebSite": "Azure Web App"
+      }
+    },
+    {
       "groupName": "Authentication",
       "name": "AuthType",
       "type": "pickList",
@@ -118,12 +133,13 @@
       }
     },
     {
-      "groupName": "AdditionalOptions",
+      "groupName": "Authentication",
       "name": "AllowUntrusted",
       "type": "boolean",
       "label": "Allow Untrusted",
       "defaultValue": true,
-      "required": false
+      "required": false,
+      "helpMarkDown": "When specified, untrusted SSL connections are allowed; otherwise, untrusted SSL Connections are not allowed."
     },
     {
       "groupName": "AdditionalOptions",
@@ -131,7 +147,8 @@
       "type": "multiLine",
       "label": "Additional Arguments",
       "defaultValue": "",
-      "required": false
+      "required": false,
+      "helpMarkDown": "Any additional MSDeploy argument."
     }
   ],
   "instanceNameFormat": "MSDeploy Delete: $(DestinationComputer) $(DestinationPath)",

@@ -169,7 +169,7 @@
       "type": "boolean",
       "label": "Include ACLs",
       "defaultValue": false,
-      "helpMarkDown": "Include ACLs.",
+      "helpMarkDown": "If ACLs on the specified path will be included in the sync operation. This setting applies to the file system, registry, and metabase. This setting is used with these providers: `appHostConfig`, `comObject32`, `comObject64`, `contentPath`, `dirPath`, `filePath`, `iisApp`, `metaKey`, `webServer`, and `webServer60`.",
       "required": false
     },
     {
@@ -193,7 +193,7 @@
       "helpMarkDown": "Protocol / server application.",
       "required": false,
       "options": {
-        "custom": "Custom URL",
+        "custom": "Custom",
         "WMSvc": "Web Deploy Handler on standard port",
         "MsDepSvc": "Web Deploy Remote Agent"
       }
@@ -242,7 +242,8 @@
       "type": "boolean",
       "label": "Allow Untrusted",
       "defaultValue": true,
-      "required": false
+      "required": false,
+      "helpMarkDown": "When specified, untrusted SSL connections are allowed; otherwise, untrusted SSL Connections are not allowed."
     },
     {
       "groupName": "AdditionalOptions",
@@ -250,7 +251,8 @@
       "type": "multiLine",
       "label": "Additional Arguments",
       "defaultValue": "",
-      "required": false
+      "required": false,
+      "helpMarkDown": "Any additional MSDeploy argument."
     }
   ],
   "instanceNameFormat": "MSDeploy Sync: $(DestinationComputer) $(DestinationPath)",

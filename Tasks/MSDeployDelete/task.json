@@ -13,7 +13,7 @@
   "version": {
     "Major": 0,
     "Minor": 7,
-    "Patch": 0
+    "Patch": 1
   },
   "preview": true,
   "demands": [],
@@ -74,10 +74,7 @@
       "label": "Destination Computer",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "The destination computer to deploy the MSDeploy package to. If blank, will perform operations on agent machine. For an Azure website the format should be https://[SiteName].scm.azurewebsites.net:443/msdeploy.axd?site=[SiteName].",
-      "properties": {
-        "EditableOptions": "True"
-      }
+      "helpMarkDown": "The destination computer to deploy the MSDeploy package to. If blank, will perform operations on agent machine. For an Azure website the format should be https://[SiteName].scm.azurewebsites.net:443/msdeploy.axd?site=[SiteName]."
     },
     {
       "groupName": "Destination",
@@ -89,7 +86,7 @@
       "required": false,
       "options": {
         "custom": "Custom",
-        "WMSvc": "Web Deploy Handler on standard port",
+        "WMSvc": "Web Deploy Handler on default port (8172)",
         "MsDepSvc": "Web Deploy Remote Agent",
         "AzureWebSite": "Azure Web App"
       }
@@ -98,7 +95,7 @@
       "groupName": "Authentication",
       "name": "AuthType",
       "type": "pickList",
-      "label": "AuthType",
+      "label": "Authentication Type",
       "defaultValue": "ntlm",
       "required": false,
       "options": {
@@ -106,6 +103,7 @@
         "ntlm": "NTLM",
         "basic": "Basic"
       },
+      "helpMarkDown": "Type of Authentication, prefer **NTLM** for deployment to the Web Deploy Remote Agent service and **Basic** for deployment to the Web Deploy Handler.",
       "properties": {
         "EditableOptions": "True"
       }
@@ -116,10 +114,7 @@
       "type": "string",
       "label": "Username",
       "defaultValue": "",
-      "required": false,
-      "properties": {
-        "EditableOptions": "True"
-      }
+      "required": false
     },
     {
       "groupName": "Authentication",
@@ -127,10 +122,7 @@
       "type": "string",
       "label": "Password",
       "defaultValue": "",
-      "required": false,
-      "properties": {
-        "EditableOptions": "True"
-      }
+      "required": false
     },
     {
       "groupName": "Authentication",

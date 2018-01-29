@@ -22,7 +22,8 @@ param
     $Username,
     [String] [Parameter(Mandatory = $false)]
     $Password,
-    [bool]$AllowUntrusted,
+    [bool]  [Parameter(Mandatory = $false)]
+    $AllowUntrusted,
 
     [String] [Parameter(Mandatory = $false)]
     $SetParameters,
@@ -111,15 +112,14 @@ if ($AllowUntrusted) {
     $arguments += "-allowUntrusted"
 }
 
-$params = @()
 if (![string]::IsNullOrWhiteSpace($SetParameters)) {
     $SetParameters.Split("`n") | foreach {
         $parameter = $_
         $pair = $parameter.Split("=")
         $pName = $pair[0].Trim()
         $pVal = $pair[1].TrimEnd("`n","`r")
-        $params += "-setParam:name='${pName}',value='${pVal}'"
+        $arguments += "-setParam:name='${pName}',value='${pVal}'"
     }
 }
 
-Invoke-VstsTool -FileName $msdeploy -Arguments "${arguments} ${params} ${AdditionalArguments}" -RequireExitCodeZero
+Invoke-VstsTool -FileName $msdeploy -Arguments "${arguments} ${AdditionalArguments}" -RequireExitCodeZero

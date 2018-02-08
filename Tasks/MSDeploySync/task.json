@@ -236,7 +236,7 @@
       "type": "boolean",
       "label": "Allow Untrusted",
       "defaultValue": true,
-      "required": true,
+      "required": false,
       "helpMarkDown": "When specified, untrusted SSL connections are allowed; otherwise, untrusted SSL Connections are not allowed."
     },
     {

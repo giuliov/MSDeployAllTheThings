@@ -26,7 +26,7 @@ try {
     .\MSDeploySync.ps1 -SourceProvider $SourceProvider -SourcePath $SourcePath `
         -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath `
         -IncludeACLs $IncludeACLs -DestinationComputer $DestinationComputer `
-        -Protocol $Protocol -AllowUntrusted $AllowUntrusted`
+        -Protocol $Protocol -AllowUntrusted $AllowUntrusted `
         -AuthType $AuthType -Username $Username -Password $Password `
         -SetParameters $SetParameters `
         -AdditionalArguments $AdditionalArguments

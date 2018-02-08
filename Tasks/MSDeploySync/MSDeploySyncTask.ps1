@@ -9,8 +9,10 @@ try {
     # Get the inputs.
     [string]$SourceProvider = Get-VstsInput -Name SourceProvider
     [string]$SourcePath = Get-VstsInput -Name SourcePath
+    [string]$SourceParameters = Get-VstsInput -Name SourceParameters
     [string]$DestinationProvider = Get-VstsInput -Name DestinationProvider
     [string]$DestinationPath = Get-VstsInput -Name DestinationPath
+    [string]$DestinationParameters = Get-VstsInput -Name DestinationParameters
     [bool]$IncludeACLs = Get-VstsInput -Name IncludeACLs -AsBool
     [string]$DestinationComputer = Get-VstsInput -Name DestinationComputer
     [string]$Protocol = Get-VstsInput -Name Protocol
@@ -23,8 +25,9 @@ try {
  
     #Assert-VstsPath -LiteralPath $source -PathType Container
 
-    .\MSDeploySync.ps1 -SourceProvider $SourceProvider -SourcePath $SourcePath `
-        -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath `
+    .\MSDeploySync.ps1 `
+        -SourceProvider $SourceProvider -SourcePath $SourcePath -SourceParameters $SourceParameters `
+        -DestinationProvider $DestinationProvider -DestinationPath $DestinationPath -DestinationParameters $DestinationParameters `
         -IncludeACLs $IncludeACLs -DestinationComputer $DestinationComputer `
         -Protocol $Protocol -AllowUntrusted $AllowUntrusted `
         -AuthType $AuthType -Username $Username -Password $Password `

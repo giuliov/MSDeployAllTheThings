@@ -5,10 +5,14 @@ param
     $SourceProvider,
     [String] [Parameter(Mandatory = $false)]
     $SourcePath,
+    [String] [Parameter(Mandatory = $false)]
+    $SourceParameters,
     [String] [Parameter(Mandatory = $true)]
     $DestinationProvider,
     [String] [Parameter(Mandatory = $false)]
     $DestinationPath,
+    [String] [Parameter(Mandatory = $false)]
+    $DestinationParameters,
     [String] [Parameter(Mandatory = $false)]
     $DestinationComputer,
     [String] [Parameter(Mandatory = $false)]
@@ -53,19 +57,19 @@ function Get-SingleFile($files, $pattern)
 Write-Verbose "Entering script MSDeployPackageSync.ps1"
 
 $MSDeployKey = 'HKLM:\SOFTWARE\Microsoft\IIS Extensions\MSDeploy\3' 
- if(!(Test-Path $MSDeployKey)) { 
- throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
- } 
+if (!(Test-Path $MSDeployKey)) { 
+    throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
+} 
 
 $InstallPath = (Get-ItemProperty $MSDeployKey).InstallPath 
- if(!$InstallPath -or !(Test-Path $InstallPath)) { 
- throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
- } 
+if (!$InstallPath -or !(Test-Path $InstallPath)) { 
+    throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
+} 
 
 $msdeploy = Join-Path $InstallPath "msdeploy.exe" 
- if(!(Test-Path $MSDeploy)) { 
- throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
- } 
+if (!(Test-Path $MSDeploy)) { 
+    throw "Could not find MSDeploy. Use Web Platform Installer to install the 'Web Deployment Tool' and re-run this command" 
+}
 
 if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     Write-Host "No destination or authType defined, performing local operation"
@@ -83,6 +87,9 @@ if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     $remoteArguments = "computerName='${URL}',userName='${UserName}',password='${Password}',authType='${AuthType}',"
 }
 
+
+$IsDefaultSourcePath = $SourcePath -eq $env:AGENT_RELEASEDIRECTORY
+
 switch ($SourceProvider) {
     "package" {
         Write-Host "packageFile= Find-VstsFiles -Pattern ${SourcePath}"
@@ -93,30 +100,40 @@ switch ($SourceProvider) {
         $packageFile = Get-SingleFile $packageFile $SourcePath
         
         Write-Host "No source provider specified, using package provider for '${packageFile}'"
-        $SourceProvider = "package='${packageFile}'"            
+        $Source = "package='${packageFile}'"            
     }
     "recycleApp" {
-        if ($SourcePath -eq $env:AGENT_RELEASEDIRECTORY) {
-            $SourceProvider = "${SourceProvider}"
+        if ($IsDefaultSourcePath) {
+            $Source = "${SourceProvider}"
         } else {
-            $SourceProvider = "${SourceProvider}='${SourcePath}'"
+            $Source = "${SourceProvider}='${SourcePath}'"
         }
     }
     Default {
-        $SourceProvider = "${SourceProvider}='${SourcePath}'"
+        $Source = "${SourceProvider}='${SourcePath}'"
     }
 }
-
-if ($DestinationPath) {
-    $DestinationProvider = "${DestinationProvider}='${DestinationPath}'"
+if ($SourceParameters) {
+    $Source = "${Source},${SourceParameters}"
 }
 
-Write-Host "Deploying $SourceProvider to $DestinationComputer"
+
+if ($DestinationPath) {
+    $Destination = "${DestinationProvider}='${DestinationPath}'"
+} else {
+    $Destination = $DestinationProvider
+}
+if ($DestinationParameters) {
+    $Destination = "${Destination},${DestinationParameters}"
+}
+
+
+Write-Host "Deploying $Source to $DestinationComputer"
 
 [string[]] $arguments = 
  "-verb:sync",
- "-source:${SourceProvider}",
- "-dest:${DestinationProvider},${remoteArguments}includeAcls='${IncludeACLs}'"
+ "-source:${Source}",
+ "-dest:${Destination},${remoteArguments}includeAcls='${IncludeACLs}'"
 
 if ($AllowUntrusted) {
     $arguments += "-allowUntrusted"

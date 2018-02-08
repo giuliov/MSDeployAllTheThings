@@ -104,6 +104,15 @@
       "required": false
     },
     {
+      "groupName": "Source",
+      "name": "SourceParameters",
+      "type": "string",
+      "label": "Source Parameters",
+      "defaultValue": "",
+      "helpMarkDown": "Source parameters in addition to Source Path.",
+      "required": false
+    },
+    {
       "groupName": "Destination",
       "name": "DestinationProvider",
       "type": "pickList",
@@ -162,6 +171,15 @@
       "label": "Destination Path",
       "defaultValue": "",
       "helpMarkDown": "Path to destination.",
+      "required": false
+    },
+    {
+      "groupName": "Destination",
+      "name": "DestinationParameters",
+      "type": "string",
+      "label": "Destination Parameters",
+      "defaultValue": "",
+      "helpMarkDown": "Destination parameters in addition to Destination Path.",
       "required": false
     },
     {

@@ -28,7 +28,7 @@ Update task version too.
 
 ### 0.7.0
 
-Fork!
+Forked, added lots of parameters and additional Tasks for delete action
 
 ## Want more?
 

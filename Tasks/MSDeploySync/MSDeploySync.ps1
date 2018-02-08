@@ -118,10 +118,8 @@ Write-Host "Deploying $SourceProvider to $DestinationComputer"
  "-source:${SourceProvider}",
  "-dest:${DestinationProvider},${remoteArguments}includeAcls='${IncludeACLs}'"
 
-Write-Host ">>>> AllowUntrusted is ${AllowUntrusted}"
 if ($AllowUntrusted) {
     $arguments += "-allowUntrusted"
-    Write-Host ">>>> added AllowUntrusted -allowUntrusted to arguments"
 }
 
 if (![string]::IsNullOrWhiteSpace($SetParameters)) {

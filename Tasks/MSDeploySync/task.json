@@ -13,8 +13,9 @@
   "version": {
     "Major": 0,
     "Minor": 7,
-    "Patch": 2
+    "Patch": 3
   },
+  "releaseNotes": "Windows only.",
   "preview": true,
   "demands": [],
   "minimumAgentVersion": "1.95.0",
@@ -100,7 +101,7 @@
       "label": "Web Deploy Package / Source Path",
       "defaultValue": "",
       "helpMarkDown": "Path to sources, typically the MSDeploy package under the default artifact directory.",
-      "required": true
+      "required": false
     },
     {
       "groupName": "Destination",

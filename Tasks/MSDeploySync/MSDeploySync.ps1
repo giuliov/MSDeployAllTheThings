@@ -3,7 +3,7 @@ param
 (
     [String] [Parameter(Mandatory = $false)]
     $SourceProvider,
-    [String] [Parameter(Mandatory = $true)]
+    [String] [Parameter(Mandatory = $false)]
     $SourcePath,
     [String] [Parameter(Mandatory = $true)]
     $DestinationProvider,

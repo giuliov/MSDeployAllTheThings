@@ -83,16 +83,30 @@ if (-not $DestinationComputer -or $AuthType -eq 'none' -or -not $AuthType) {
     $remoteArguments = "computerName='${URL}',userName='${UserName}',password='${Password}',authType='${AuthType}',"
 }
 
+switch ($SourceProvider) {
+    "package" {
+        Write-Host "packageFile= Find-VstsFiles -Pattern ${SourcePath}"
+        $packageFile = Find-VstsFiles -LegacyPattern $SourcePath
+        Write-Host "packageFile= ${packageFile}"
+        
+        #Ensure that at most a single package (.zip) file is found
+        $packageFile = Get-SingleFile $packageFile $SourcePath
+        
+        Write-Host "No source provider specified, using package provider for '${packageFile}'"
+        $SourceProvider = "package='${packageFile}'"            
+    }
+    "recycleApp" {
+        if ($SourcePath -eq $env:AGENT_RELEASEDIRECTORY) {
+            $SourceProvider = "${SourceProvider}"
+        } else {
+            $SourceProvider = "${SourceProvider}='${SourcePath}'"
+        }
+    }
+    Default {
+        $SourceProvider = "${SourceProvider}='${SourcePath}'"
+    }
+}
 if (-not $SourceProvider -or $SourceProvider -eq "package") {
-    Write-Host "packageFile= Find-VstsFiles -Pattern ${SourcePath}"
-    $packageFile = Find-VstsFiles -LegacyPattern $SourcePath
-    Write-Host "packageFile= ${packageFile}"
-    
-    #Ensure that at most a single package (.zip) file is found
-    $packageFile = Get-SingleFile $packageFile $SourcePath
-    
-    Write-Host "No source provider specified, using package provider for '${packageFile}'"
-    $SourceProvider = "package='${packageFile}'"
 } else {
     $SourceProvider = "${SourceProvider}='${SourcePath}'"
 }

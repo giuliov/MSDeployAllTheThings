@@ -106,10 +106,6 @@ switch ($SourceProvider) {
         $SourceProvider = "${SourceProvider}='${SourcePath}'"
     }
 }
-if (-not $SourceProvider -or $SourceProvider -eq "package") {
-} else {
-    $SourceProvider = "${SourceProvider}='${SourcePath}'"
-}
 
 if ($DestinationPath) {
     $DestinationProvider = "${DestinationProvider}='${DestinationPath}'"
